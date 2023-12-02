@@ -3,6 +3,7 @@ import { Book } from './Book';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { ObjectEncodingOptions } from 'fs';
  
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,16 @@ export class CrudService {
       catchError(this.handleError)
     );
   }
+
+  //Delete
+  DeleteBook(id: any): Observable<any> {
+    let API_URL = '${this.REST_API}/delete-book/${id}';
+    return this.httpClient.delete(API_URL, { headers: this.httpHeaders })
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+  
   // Error 
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
